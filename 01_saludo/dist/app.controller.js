@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
+const ficha_1 = require("./Model/ficha");
 let AppController = class AppController {
     appService;
     constructor(appService) {
@@ -28,6 +29,12 @@ let AppController = class AppController {
     }
     getHelloCompeto(nombre, edad) {
         return this.appService.getHello() + " te llamas: " + nombre + " y tienes " + edad + " años";
+    }
+    getFicha(nombre, edad) {
+        return new ficha_1.Ficha(nombre, edad, "profe@gmail.com");
+    }
+    altaFicha(ficha) {
+        console.log(ficha.nombre + "-" + ficha.edad + "-" + ficha.email);
     }
 };
 exports.AppController = AppController;
@@ -52,6 +59,21 @@ __decorate([
     __metadata("design:paramtypes", [String, Number]),
     __metadata("design:returntype", String)
 ], AppController.prototype, "getHelloCompeto", null);
+__decorate([
+    (0, common_1.Get)("ficha/:name/:age"),
+    __param(0, (0, common_1.Param)("name")),
+    __param(1, (0, common_1.Param)("age")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", ficha_1.Ficha)
+], AppController.prototype, "getFicha", null);
+__decorate([
+    (0, common_1.Post)('alta'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [ficha_1.Ficha]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "altaFicha", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)("Saludos"),
     __metadata("design:paramtypes", [app_service_1.AppService])
