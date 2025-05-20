@@ -1,0 +1,20 @@
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller("Saludos")
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get("general")
+  getHello(): string {
+    return this.appService.getHello();
+  }
+  @Get("personal/:name")
+  getHelloPersonal (@Param("name") nombre:string): string {
+    return this.appService.getHello()+": "+nombre;
+  }
+  @Get('completo')
+  getHelloCompeto(@Query("name") nombre:string,@Query("age") edad:number):string{
+    return this.appService.getHello()+" te llamas: "+nombre+" y tienes "+edad+" años";
+  }
+}
